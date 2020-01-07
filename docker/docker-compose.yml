@@ -9,4 +9,11 @@ services:
             # 別の部分でdocker-compose upされると正しくコンパイルがされない。
             - "$MNTDIR:/workdir"
         command: latexmk -pdf -pvc $SRCFILE
-        
+    makrdown_compiler:
+        container_name: markdown_compiler
+        image: nozomi0966/pandocker
+        user: "$UID:$GID"
+        volumes:
+            - "$MNTDIR:/workdir"
+        command: python pandoc-watch/pandocwatch.py -e ".tex" ...
+
