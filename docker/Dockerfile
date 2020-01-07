@@ -2,7 +2,7 @@ FROM frolvlad/alpine-glibc:latest
 
 ENV PATH /usr/local/texlive/2019/bin/x86_64-linux:$PATH
 
-RUN apk add --no-cache perl fontconfig-dev freetype-dev curl && \
+RUN apk add && apk add --no-cache perl fontconfig-dev freetype-dev curl && \
     set -ex; \
     apk add --no-cache --virtual .fetch-deps wget xz tar su-exec curl && \
     mkdir /tmp/install-tl-unx && \
@@ -28,6 +28,10 @@ RUN tlmgr info tcolorbox --repository http://mirror.ctan.org/systems/texlive/tln
     tlmgr update --self && \
     tlmgr init-usertree; \
     tlmgr install newtx fontaxes boondox txfonts helvetic kastrup tex-gyre mweights
+
+# install pandoc
+#RUN apk update && apk add ghc wget pandoc
+
 
 WORKDIR /workdir
 
